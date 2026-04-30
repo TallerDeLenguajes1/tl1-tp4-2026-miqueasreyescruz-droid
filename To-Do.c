@@ -87,3 +87,22 @@ void liberarLista (Nodo *Start) {
     free(aux);
   }
 }
+
+Nodo * busquedaAnteriorPorID (Nodo *Start, int idBuscado) {
+  Nodo *anterior = Start, *aux = Start;
+  while (aux && aux -> T.TareaID != idBuscado) {
+    anterior = aux;
+    aux = aux -> Siguiente;
+  }
+
+  if (aux == NULL) {
+    return aux;
+  }
+  else {
+    return anterior;
+  }
+}
+
+Nodo * busquedaAnteriorPorClave (Nodo *Start, char *clave) {
+
+}
