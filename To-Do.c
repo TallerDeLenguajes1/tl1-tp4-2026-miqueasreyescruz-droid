@@ -16,11 +16,11 @@ typedef struct Nodo {
 
 Nodo * crearListaVacia(); 
 Nodo * crearTarea (int *ID);
+void insertarTarea (Nodo **Start,Nodo *Nodo);
 
 int main () {
   int ID = ID_INICIAL;
   Nodo *tPendientes, *tRealizadas;
-  tPendientes = crearTarea(&ID);
   return 0;
 }
 
@@ -51,4 +51,9 @@ Nodo * crearTarea (int *ID) {
   nNodo -> Siguiente = NULL;
 
   return nNodo;
+}
+
+void insertarTarea (Nodo **Start,Nodo *Tarea) {
+  Tarea -> Siguiente = *Start;
+  *Start = Tarea;
 }
