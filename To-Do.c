@@ -34,6 +34,11 @@ int main () {
     scanf("%d",&aux);
   } while (aux == 1);
 
+  printf("___TAREAS REALIZADAS___\n");
+
+  liberarLista(tPendientes);
+  liberarLista(tRealizadas);
+
   return 0;
 }
 
@@ -57,8 +62,10 @@ Nodo * crearTarea (int *ID) {
   nNodo -> T.Descripcion = (char*) malloc ((strlen(buffer) + 1) * sizeof(char));
   strcpy(nNodo -> T.Descripcion,buffer);
 
-  printf("-Ingrese la duracion de la tarea: \n");
-  scanf("%d",&aux);
+  do {
+    printf("-Ingrese la duracion de la tarea (min 10 - 100 max): \n");
+    scanf("%d",&aux);
+  } while (aux < 10 || aux > 100);
   nNodo -> T.Duracion = aux;
 
   nNodo -> Siguiente = NULL;
@@ -76,7 +83,7 @@ void liberarLista (Nodo *Start) {
   while (Start != NULL) {
     aux = Start;
     Start = Start -> Siguiente;
-    free(axu -> T.Descripcion);
+    free(aux -> T.Descripcion);
     free(aux);
   }
 }
