@@ -98,7 +98,7 @@ Nodo * extraerPorID (Nodo **Start, int idBuscado) {
   }
 
   if (aux != NULL) {
-    if (ant == (*Start)) {
+    if (aux == (*Start)) {
       (*Start) = aux -> Siguiente;
     }
     else {
@@ -110,6 +110,24 @@ Nodo * extraerPorID (Nodo **Start, int idBuscado) {
   return aux;
 }
 
-Nodo * extraerPorClave (Nodo *Start, char *clave) {
-  return 0;
+Nodo * extraerPorClave (Nodo **Start, char *clave) {
+  Nodo *aux = *Start;
+  Nodo *ant = NULL;
+
+  while (aux && (strstr(aux -> T.Descripcion,clave) == NULL)) {
+    ant = aux;
+    aux = aux -> Siguiente;
+  }
+
+  if (aux != NULL) {
+    if (aux == (*Start)) {
+      (*Start) = aux -> Siguiente;
+    }
+    else {
+      ant -> Siguiente = aux -> Siguiente;
+    }
+    aux -> Siguiente = NULL;
+  }
+  
+  return aux;
 }
