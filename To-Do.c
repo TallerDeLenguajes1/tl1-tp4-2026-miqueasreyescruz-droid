@@ -16,25 +16,66 @@ typedef struct Nodo {
 
 Nodo * crearListaVacia(); 
 Nodo * crearTarea (int *ID);
+Nodo * extraerPorID (Nodo **Start, int idBuscado);
+Nodo * extraerPorClave (Nodo **Start, char *clave);
 void insertarTarea (Nodo **Start,Nodo *Nodo);
 void liberarLista (Nodo *Nodo);
 
 int main () {
-  int ID = ID_INICIAL, aux;
-  Nodo *tPendientes, *tRealizadas;
+  int ID = ID_INICIAL, aux, aux2, idBuscado;
+  Nodo *tPendientes, *tRealizadas, *nodoAux;
+  char claveBuscada[100];
 
   tPendientes = crearListaVacia();
   tRealizadas = crearListaVacia();
 
   printf("___INGRESANDO TAREAS___\n");
   do {
-    insertarTarea(&tPendientes,crearTarea(&ID));
-
-    printf("->Desea ingresar otra tarea?\n1. Si\n2. No\n");
+    printf("->Desea ingresar una tarea?\n1. Si\n2. No\n");
     scanf("%d",&aux);
+
+    if (aux == 1) {
+      insertarTarea(&tPendientes,crearTarea(&ID));
+    }
   } while (aux == 1);
 
   printf("___TAREAS REALIZADAS___\n");
+  do {
+    printf("->Desea marcar una tarea como realizada?\n1. Si\n2. No\n");
+    scanf("%d",&aux);
+
+    if (aux == 1) {
+      do {
+        printf("->De que manera desea buscar la tarea?\n1.Por ID\n2.Por una palabra clave\n");
+        scanf("%d",&aux2);
+      } while (aux2 != 1 && aux2 != 2);
+
+      if (aux2 == 1) {
+        printf("Ingrese el ID a buscar: \n");
+        scanf("%d",&idBuscado);
+        nodoAux = extraerPorID(&tPendientes,idBuscado);
+      }
+      else {
+        printf("Ingrese la palabra clave a buscar: \n");
+        while(getchar() != '\n');
+        fgets(claveBuscada, 100, stdin);
+        claveBuscada[strcspn(claveBuscada, "\n")] = 0;
+        nodoAux = extraerPorClave(&tPendientes,claveBuscada);
+      }
+
+      if (nodoAux != NULL) {
+        printf("Tarea marcada como realizada con exito!\n");
+        insertarTarea(&tRealizadas,nodoAux);
+      }
+      else {
+        printf("Error: No se encontro la tarea\n");
+      }
+    }
+
+    if (tPendientes == NULL) {
+      printf("->La lista de Tareas Pendientes se encuentra vacia!\n");
+    }
+  } while (tPendientes != NULL && aux == 1);
 
   liberarLista(tPendientes);
   liberarLista(tRealizadas);
