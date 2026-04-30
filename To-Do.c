@@ -93,12 +93,12 @@ Nodo * extraerPorID (Nodo **Start, int idBuscado) {
   Nodo *ant = NULL;
 
   while (aux && aux -> T.TareaID != idBuscado) {
-    nant = aux;
+    ant = aux;
     aux = aux -> Siguiente;
   }
 
   if (aux != NULL) {
-    if (anterior == (*Start)) {
+    if (ant == (*Start)) {
       (*Start) = aux -> Siguiente;
     }
     else {
@@ -111,5 +111,5 @@ Nodo * extraerPorID (Nodo **Start, int idBuscado) {
 }
 
 Nodo * extraerPorClave (Nodo *Start, char *clave) {
-  
+  return 0;
 }
