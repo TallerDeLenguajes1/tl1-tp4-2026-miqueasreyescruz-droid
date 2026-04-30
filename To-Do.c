@@ -17,6 +17,7 @@ typedef struct Nodo {
 Nodo * crearListaVacia(); 
 Nodo * crearTarea (int *ID);
 void insertarTarea (Nodo **Start,Nodo *Nodo);
+void liberarLista (Nodo *Nodo);
 
 int main () {
   int ID = ID_INICIAL, aux;
@@ -68,4 +69,14 @@ Nodo * crearTarea (int *ID) {
 void insertarTarea (Nodo **Start,Nodo *Tarea) {
   Tarea -> Siguiente = *Start;
   *Start = Tarea;
+}
+
+void liberarLista (Nodo *Start) {
+  Nodo *aux;
+  while (Start != NULL) {
+    aux = Start;
+    Start = Start -> Siguiente;
+    free(axu -> T.Descripcion);
+    free(aux);
+  }
 }
