@@ -18,9 +18,12 @@ Nodo * crearListaVacia();
 Nodo * crearTarea (int *ID);
 Nodo * extraerPorID (Nodo **Start, int idBuscado);
 Nodo * extraerPorClave (Nodo **Start, char *clave);
+Nodo * buscarElementoPorID (Nodo *Start, int idBuscado);
+Nodo * buscarElementoPorClave (Nodo *Start,char *clave);
 void insertarTarea (Nodo **Start,Nodo *Nodo);
 void liberarLista (Nodo *Nodo);
 void mostrarLista (Nodo *Start);
+void mostrarNodo (Nodo *Nodo);
 
 int main () {
   int ID = ID_INICIAL, aux, aux2, idBuscado;
@@ -94,6 +97,54 @@ int main () {
   else {
     printf("->Lista de Tareas Realizadas vacia!\n");
   }
+  
+  printf("___BUSQUEDA DE TAREAS___\n");
+  do {
+    printf("->Desea buscar un elemento en las listas?\n1.Si\n2.No\n");
+    scanf("%d",&aux);
+
+    if (aux == 1) {
+      do {
+        printf("->De que manera desea buscar la tarea?\n1.Por ID\n2.Por una palabra clave\n");
+        scanf("%d",&aux2);
+      } while (aux2 != 1 && aux2 != 2);
+
+      if (aux2 == 1) {
+        //Busqueda por ID
+        printf("Ingrese el ID a buscar: \n");
+        scanf("%d",&idBuscado);
+        if ((nodoAux = buscarElementoPorID(tPendientes,idBuscado)) != NULL) {
+          printf("Tarea encontrada en la lista de Tareas Pendientes!\n");
+          mostrarNodo(nodoAux);
+        }
+        else if ((nodoAux = buscarElementoPorID(tRealizadas,idBuscado)) != NULL){
+          printf("Tarea encontrada en la lista de Tareas Realizadas!\n");
+          mostrarNodo(nodoAux);
+        }
+        else {
+          printf("Error: ID no encontrado\n");
+        }
+      }
+      else {
+        //Busqueda por Clave
+        printf("Ingrese la palabra clave a buscar: \n");
+        while(getchar() != '\n');
+        fgets(claveBuscada, 100, stdin);
+        claveBuscada[strcspn(claveBuscada, "\n")] = 0;
+        if ((nodoAux = buscarElementoPorClave(tPendientes,claveBuscada)) != NULL) {
+          printf("Tarea encontrada en la lista de Tareas Pendientes!\n");
+          mostrarNodo(nodoAux);
+        }
+        else if ((nodoAux = buscarElementoPorClave(tRealizadas,claveBuscada)) != NULL){
+          printf("Tarea encontrada en la lista de Tareas Realizadas!\n");
+          mostrarNodo(nodoAux);
+        }
+        else {
+          printf("Error: ID no encontrado\n");
+        }
+      }
+    }
+  } while (aux == 1);
 
   liberarLista(tPendientes);
   liberarLista(tRealizadas);
@@ -195,9 +246,32 @@ void mostrarLista (Nodo *Start) {
   Nodo *aux = Start;
   while (aux != NULL) {
     printf("-Tarea:\n");
-    printf("ID: %d\n", aux -> T.TareaID);
+    printf("ID: %d\n",aux -> T.TareaID);
     printf("Descripcion: %s\n",aux -> T.Descripcion);
     printf("Duracion: %d\n",aux -> T.Duracion);
     aux = aux -> Siguiente;
   }
+}
+
+Nodo * buscarElementoPorID (Nodo *Start, int idBuscado) {
+  Nodo *aux = Start;
+  while (aux && (aux -> T.TareaID != idBuscado)) {
+    aux = aux -> Siguiente;
+  }
+  return aux;
+}
+
+Nodo * buscarElementoPorClave (Nodo *Start,char *clave) {
+  Nodo *aux = Start; 
+  while (aux && (strstr(aux -> T.Descripcion,clave) == NULL)) {
+    aux = aux -> Siguiente;
+  }
+  return aux;
+}
+
+void mostrarNodo (Nodo *Nodo) {
+    printf("-Tarea:\n");
+    printf("ID: %d\n",Nodo -> T.TareaID);
+    printf("Descripcion: %s\n",Nodo -> T.Descripcion);
+    printf("Duracion: %d\n",Nodo -> T.Duracion);
 }
