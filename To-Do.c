@@ -20,6 +20,7 @@ Nodo * extraerPorID (Nodo **Start, int idBuscado);
 Nodo * extraerPorClave (Nodo **Start, char *clave);
 void insertarTarea (Nodo **Start,Nodo *Nodo);
 void liberarLista (Nodo *Nodo);
+void mostrarLista (Nodo *Start);
 
 int main () {
   int ID = ID_INICIAL, aux, aux2, idBuscado;
@@ -171,4 +172,15 @@ Nodo * extraerPorClave (Nodo **Start, char *clave) {
   }
   
   return aux;
+}
+
+void mostrarLista (Nodo *Start) {
+  Nodo *aux = Start;
+  while (aux != NULL) {
+    printf("-Tarea:\n");
+    printf("ID: %d\n", aux -> T.TareaID);
+    printf("Descripcion: %s\n",aux -> T.Descripcion);
+    printf("Duracion: %d\n",aux -> T.Duracion);
+    aux = aux -> Siguiente;
+  }
 }
