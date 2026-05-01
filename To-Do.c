@@ -78,6 +78,23 @@ int main () {
     }
   } while (tPendientes != NULL && aux == 1);
 
+  printf("___MOSTRANDO LISTAS ___\n");
+  if (tPendientes != NULL) {
+    printf("->Lista de Tareas Pendientes:\n");
+    mostrarLista(tPendientes);
+  }
+  else {
+    printf("Lista de Tareas Pendientes vacia!\n");
+  }
+
+  if (tRealizadas != NULL) {
+    printf("->Lista de Tareas Realizadas\n");
+    mostrarLista(tRealizadas);
+  }
+  else {
+    printf("->Lista de Tareas Realizadas vacia!\n");
+  }
+
   liberarLista(tPendientes);
   liberarLista(tRealizadas);
 
